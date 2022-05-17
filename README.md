@@ -7,7 +7,7 @@ Robimy Zeldę i będzie fajnie, pierwsze nasze zadanie:
 
 - obejrzeć tutorial do paczki pygame:
 - Kuba ❌
-- Gosia ❌
+- Gosia
 - Julia ❌
 - Marcin ❌
 
