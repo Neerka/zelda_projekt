@@ -1,1 +1,1 @@
-print('Hello world')
+print('Tutaj będą przeciwnicy.')
