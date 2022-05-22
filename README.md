@@ -6,10 +6,10 @@ Siema, siema
 Robimy Zeldę i będzie fajnie, pierwsze nasze zadanie:
 
 - obejrzeć tutorial do paczki pygame:
-- Kuba
-- Gosia
-- Julia ❌
-- Marcin ❌
+- Kuba - Implementacja grafiki
+- Gosia - Przeciwnicy
+- Julia - Postać gracza
+- Marcin - Mapka
 
 Jak skończycie ogarniać tutoriale to zróbcie commita na nowym branchu, gdzie zedytujecie ten tekst usuwając X przy swoim imieniu i dajcie pull request.
 
