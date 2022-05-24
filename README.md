@@ -4,7 +4,7 @@
 Siema, siema
 
 Robimy Zeldę i będzie fajnie, do środy zrobić:
-- Kuba - Implementacja grafiki:
+- Kuba - Implementacja grafiki i sklejenie w całość:
 - pomóc innym
 
 - Gosia - Przeciwnicy:
