@@ -15,7 +15,7 @@ while run_game:
     if keys[pygame.K_ESCAPE]:
         run = False
 
-    win.fill((40, 40, 65))
+    win.fill((40, 40, 65)) # to tylko kolorek tła
     pygame.display.update()
 
 pygame.quit()
