@@ -29,7 +29,6 @@ class Player:
             self.y_position += self.speed
             
     def attack(self):
-        
        if keys[pygame.K_a]:
           self.x_sword = self.x_position - self.sword.length
           self.y_sword = self.y_position - 0.25*self.width
