@@ -17,32 +17,34 @@ class Player:
         self.y_position = 50
         self.x_sword = -500
         self.y_sword = -500
-        
+        self.throwCount = 
     def move(self):
-        if keys[pygame.K_LEFT] and self.x_position > self.speed:
+        if keys[pygame.K_left] and self.x_position > self.speed:
             self.x_position -= self.speed
-        if keys[pygame.K_RIGHT] and self.x_position < screenWidth-self.width-self.speed:
+        if keys[pygame.K_right] and self.x_position < screenWidth-self.width-self.speed:
             self.x_position += self.speed
-        if keys[pygame.K_UP] and self.y_position > self.speed:
+        if keys[pygame.K_up] and self.y_position > self.speed:
             self.y_position -= self.speed
-        if keys[pygame.K_DOWN] and self.y_position < screenHeight-self.height-self.speed:
+        if keys[pygame.K_down] and self.y_position < screenHeight-self.height-self.speed:
             self.y_position += self.speed
-    def attack(self, enemy):
-        if keys[pygame.K_A]:
+            
+    def attack(self):
+        if keys[pygame.K_a]:
             self.x_sword = self.x_position - self.sword.length
-            self.y_sword = self.y_position - 0,25*self.width
-        if keys[pygame.K_D]:
+            self.y_sword = self.y_position - 0.25*self.width
+        if keys[pygame.K_d]:
             self.x_sword = self.x_position + self.width
-            self.y_sword = self.y_position - 0,25*self.width
-        if keys[pygame.K_W]:
-            self.x_sword = self.x_position + 0,25*self.height
+            self.y_sword = self.y_position - 0.25*self.width
+        if keys[pygame.K_w]:
+            self.x_sword = self.x_position + 0.25*self.height
             self.y_sword = self.y_position - self.sword_lenght
-        if keys[pygame.K_S]:
-            self.x_sword = self.x_position + 0,25*self.height
+        if keys[pygame.K_s]:
+            self.x_sword = self.x_position + 0.25*self.height
             self.y_sword = self.y_position + self.width
-
-    def defense(self):
-
+            
+    def defense(self, enemy):
+        self.health_points -= enemy
+        
     def throw_sword(self):
 
     def set_bomb(self):
