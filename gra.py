@@ -1,21 +1,42 @@
 import pygame
-pygame.init()
 
+TILESIZE = 64
 win_width = 1280
 win_height = 780
-
 win = pygame.display.set_mode((win_width, win_height))
-pygame.display.set_caption('Zelda - projekt')
 
-run_game = True
-while run_game:
-    pygame.time.delay(16) # to jest najbliżej 60 FPSów, ale będzie do zmiany i inaczej będziemy to odświeżać
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_ESCAPE]:
-        run_game = False
+o = pygame.image.load("obstacle.png")
+v = pygame.image.load("visible.png")
 
-    win.fill((40, 40, 65)) # to tylko kolorek tła
-    pygame.display.update()
 
-pygame.quit()
+map = [
+[o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o],
+[o,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,o],
+[o,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,o],
+[o,v,v,v,v,v,v,v,o,o,o,o,v,v,v,v,v,v,v,o],
+[o,v,v,v,v,v,v,v,o,o,o,o,v,v,v,v,v,v,v,o],
+[o,v,v,v,v,v,v,v,v,o,o,v,v,v,v,v,v,v,v,o],
+[o,v,v,v,v,v,v,v,v,o,o,v,v,v,v,v,v,v,v,o],
+[o,v,v,v,v,v,v,v,o,o,o,o,v,v,v,v,v,v,v,o],
+[o,v,v,v,v,v,v,v,o,o,o,o,v,v,v,v,v,v,v,o],
+[o,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,o],
+[o,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,o],
+[o,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,o],
+[o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o,o]
+]
+
+
+
+class Level:
+    def __init__(self, map):
+        self.map = map
+        self.map_width = 20
+        self.map_height = 13
+        self.TILESIZE = 64
+    def draw_game(self):
+        """ta funkcja w teorii ma rysowac cala mape"""
+        for row in range(self.map_height):
+            for column in range(self.map_width):
+                win.blit(self.map[row][column], (column*self.TILESIZE, row*self.TILESIZE))
+
