@@ -17,7 +17,7 @@ class Player:
         self.y_position = 50
         self.x_sword = -500
         self.y_sword = -500
-        self.throwCount = 
+        self.throwCount = 8
     def move(self):
         if keys[pygame.K_left] and self.x_position > self.speed:
             self.x_position -= self.speed
@@ -29,22 +29,34 @@ class Player:
             self.y_position += self.speed
             
     def attack(self):
-        if keys[pygame.K_a]:
-            self.x_sword = self.x_position - self.sword.length
-            self.y_sword = self.y_position - 0.25*self.width
-        if keys[pygame.K_d]:
-            self.x_sword = self.x_position + self.width
-            self.y_sword = self.y_position - 0.25*self.width
-        if keys[pygame.K_w]:
-            self.x_sword = self.x_position + 0.25*self.height
-            self.y_sword = self.y_position - self.sword_lenght
-        if keys[pygame.K_s]:
-            self.x_sword = self.x_position + 0.25*self.height
-            self.y_sword = self.y_position + self.width
+        
+       if keys[pygame.K_a]:
+          self.x_sword = self.x_position - self.sword.length
+          self.y_sword = self.y_position - 0.25*self.width
+       if keys[pygame.K_d]:
+          self.x_sword = self.x_position + self.width
+          self.y_sword = self.y_position - 0.25*self.width
+       if keys[pygame.K_w]:
+          self.x_sword = self.x_position + 0.25*self.height
+          self.y_sword = self.y_position - self.sword_lenght
+       if keys[pygame.K_s]:
+          self.x_sword = self.x_position + 0.25*self.height
+          self.y_sword = self.y_position + self.width
             
     def defense(self, enemy):
         self.health_points -= enemy
         
     def throw_sword(self):
+        if self.throwCount:  
+            if keys[pygame.K_a]:
+                self.x_sword -= (self.throwCount**2)*0.2
+            if keys[pygame.K_d]:
+                self.x_sword += (self.throwCount**2)*0.2
+            if keys[pygame.K_w]:
+                self.y_sword -= (self.throwCount**2)*0.2
+            if keys[pygame.K_s]:
+                self.y_sword += (self.throwCount**2)*0.2
+        else:
+            self.throwCount = 8
 
     def set_bomb(self):
