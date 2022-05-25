@@ -3,14 +3,17 @@
 
 Siema, siema
 
-Robimy Zeldę i będzie fajnie, pierwsze nasze zadanie:
+Robimy Zeldę i będzie fajnie, do środy zrobić:
+- Kuba - Implementacja grafiki i sklejenie w całość:
+- pomóc innym
 
-- obejrzeć tutorial do paczki pygame:
-- Kuba - Implementacja grafiki
-- Gosia - Przeciwnicy
-- Julia - Postać gracza
-- Marcin - Mapka
+- Gosia - Przeciwnicy:
+- dwóch jakichś prostych przeciwników (jeden melee drugi range)
 
-Jak skończycie ogarniać tutoriale to zróbcie commita na nowym branchu, gdzie zedytujecie ten tekst usuwając X przy swoim imieniu i dajcie pull request.
+- Julia - Postać gracza:
+- poruszanie się i uniki, może sprint i ataki
 
-Potem się podzielimy na konkretne obowiązki.
+- Marcin - Mapka:
+- przynajmniej jedna plansza z blokami kolizyjnymi
+
+Jak skończycie ogarniać tutoriale to zróbcie commita na nowym branchu, gdzie zedytujecie ten tekst przy swoim imieniu dodając ✔ i dajcie pull request.
