@@ -11,6 +11,10 @@ run_game = True
 while run_game:
     pygame.time.delay(16) # to jest najbliżej 60 FPSów, ale będzie do zmiany i inaczej będziemy to odświeżać
 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE]:
         run_game = False
