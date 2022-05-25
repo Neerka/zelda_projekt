@@ -15,9 +15,10 @@ class Player:
         self.width = 32
         self.x_position = 50
         self.y_position = 50
+        self.x_sword = -500
+        self.y_sword = -500
         
     def move(self):
-        keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and self.x_position > self.speed:
             self.x_position -= self.speed
         if keys[pygame.K_RIGHT] and self.x_position < screenWidth-self.width-self.speed:
@@ -30,6 +31,15 @@ class Player:
         if keys[pygame.K_A]:
             self.x_sword = self.x_position - self.sword.length
             self.y_sword = self.y_position - 0,25*self.width
+        if keys[pygame.K_D]:
+            self.x_sword = self.x_position + self.width
+            self.y_sword = self.y_position - 0,25*self.width
+        if keys[pygame.K_W]:
+            self.x_sword = self.x_position + 0,25*self.height
+            self.y_sword = self.y_position - self.sword_lenght
+        if keys[pygame.K_S]:
+            self.x_sword = self.x_position + 0,25*self.height
+            self.y_sword = self.y_position + self.width
 
     def defense(self):
 
