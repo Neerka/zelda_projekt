@@ -13,7 +13,7 @@ while run_game:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE]:
-        run = False
+        run_game = False
 
     win.fill((40, 40, 65)) # to tylko kolorek tła
     pygame.display.update()
