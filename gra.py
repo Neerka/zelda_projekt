@@ -59,3 +59,18 @@ class Player:
             self.throwCount = 8
 
     def set_bomb(self):
+       
+class Bomb:
+    def __init__(self):
+        self.timer = 3
+        self.explosion_range = 30
+        self.x_bomb = -500
+        self.y_bomb = -500
+        self.bomb_height = 10
+        self.bomb_width = 10
+        self.isSet = False
+
+    def explode(self):
+        if self.isSet = True:
+            for i in range (self.timer):
+                time.sleep(3)
