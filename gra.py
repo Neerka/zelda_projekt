@@ -42,31 +42,62 @@ class Player:
             
     def attack(self):
        if keys[pygame.K_a]:
-          self.x_sword = self.x_position - self.sword.length
-          self.y_sword = self.y_position - 0.25*self.width
-       if keys[pygame.K_d]:
-          self.x_sword = self.x_position + self.width
-          self.y_sword = self.y_position - 0.25*self.width
-       if keys[pygame.K_w]:
-          self.x_sword = self.x_position + 0.25*self.height
-          self.y_sword = self.y_position - self.sword_lenght
-       if keys[pygame.K_s]:
-          self.x_sword = self.x_position + 0.25*self.height
-          self.y_sword = self.y_position + self.width
-            
-    def defense(self, enemy):
-        self.health_points -= enemy
+           self.sword_width = 16
+           self.sword_length = 48
+           self.x_sword = self.x_position - self.sword_length
+           self.y_sword = self.y_position + 0.25*self.height
+           self.sword_rect = pygame.Rect(self.x_sword,
+                                         self.y_sword,
+                                         self.sword_length, self.sword_width)
+           self.sword_exists = 1
+           return True
+           
+       elif keys[pygame.K_d]:
+           self.sword_width = 16
+           self.sword_length = 48
+           self.x_sword = self.x_position + self.width
+           self.y_sword = self.y_position + 0.25*self.width
+           self.sword_rect = pygame.Rect(self.x_sword,
+                                         self.y_sword,
+                                         self.sword_length, self.sword_width)
+           self.sword_exists = 1
+           return True
+           
+       elif keys[pygame.K_w]:
+           self.sword_width = 48
+           self.sword_length = 16
+           self.x_sword = self.x_position + 0.25*self.height
+           self.y_sword = self.y_position - self.sword_width
+           self.sword_rect = pygame.Rect(self.x_sword,
+                                         self.y_sword,
+                                         self.sword_length, self.sword_width)
+           self.sword_exists = 1
+           return True
+           
+       elif keys[pygame.K_s]:
+           self.sword_width = 48
+           self.sword_length = 16
+           self.x_sword = self.x_position + 0.25*self.height
+           self.y_sword = self.y_position + self.width
+           self.sword_rect = pygame.Rect(self.x_sword,
+                                         self.y_sword,
+                                         self.sword_length, self.sword_width)
+           self.sword_exists = 1
+           return True
+           
+       else:
+           self.sword_exists = 0
         
-    def throw_sword(self):
-        if self.throwCount:  
+   def throw_sword(self):
+        if self.throwCount:
             if keys[pygame.K_a]:
-                self.x_sword -= (self.throwCount**2)*0.2
+                self.sword_rect.x -= (self.throwCount**2)*0.5
             if keys[pygame.K_d]:
-                self.x_sword += (self.throwCount**2)*0.2
+                self.sword_rect.x += (self.throwCount**2)*0.5
             if keys[pygame.K_w]:
-                self.y_sword -= (self.throwCount**2)*0.2
+                self.sword_rect.y -= (self.throwCount**2)*0.5
             if keys[pygame.K_s]:
-                self.y_sword += (self.throwCount**2)*0.2
+                self.sword_rect.y += (self.throwCount**2)*0.5
         else:
             self.throwCount = 8
 
