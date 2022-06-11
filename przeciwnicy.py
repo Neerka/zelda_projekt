@@ -10,11 +10,6 @@ class Boss():
    def atak_bossa(self,Gracz:Player):
     self.pkt_zycia_gracza-=Gracz
       
-   def umrzyj(self):
-    global lista_potworow
-    if self.pkt_zycia == 0:
-      lista_potworow.remove(self)
-      
    def pociski_bossa():
     if self.status_pocisku==True:
       window.fill((255, 255, 255))
@@ -36,6 +31,11 @@ class Potwory():
     self.pozycja_x=random.randint(0,40)
     self.pozycja_y=random.randint(0,50)
     
+  def umrzyj(self):
+    global lista_potworow
+    if self.pkt_zycia == 0:
+      lista_potworow.remove(self)
+    
   def liczba_potworow(self): 
     while self.spawnowane_potwory<=wylosowana_liczba_potworow:
       self.rodzaj=random.randint(1,2)
@@ -46,7 +46,7 @@ class Potwory():
         self.lista_potworow.append("Czarny łuk")
         self.self.spawnowane_potwory+=1
         
-  def atak_potworow(self): #czyli jak będzie kolizja gracza z Odoldą = atak
+  def atak_potworow(self):
     for potwor in self.lista_potworow:
       self.pkt_zycia_gracza-=self.pkt_ataku_mieczem  #wprowadzić namierzanie pozycji gracza
       print("Gracz otrzymał obrażenia.")
@@ -60,22 +60,54 @@ class Potwory():
       self.liczba_strzal-=1
       print("Gracz otrzymał obrażenia.")
       time.sleep()
+  def movement(self):
+    if self.kierunek == 1:
+      self.x += self.szybkosc
+      self.walk_count += 1
+      if self.walk_count == 31:
+        self.szybkosc = self.szybkosc*(-1)
+        self.walk_count = 0
+    if self.kierunek == 2:
+      self.y += self.szybkosc
+      self.walk_count += 1
+      if self.walk_count == 31:
+        self.szybkosc = self.szybkosc*(-1)
+        self.walk_count = 0
+    self.op_rect = pygame.Rect(self.x, self.y, self.width, self.height)
       
 class Odolda(Potwory): #miecz
   def __init__(self,pozycja_x: int, pozycja_y: int):
     self.nazwa="Odolda"
     self.pkt_zycia=100
-    self.pkt_ataku_mieczem=10
-    self.szybkosc=6
+    self.atak=20
+    self.szybkosc=2
+    self.height, self.width = 32, 32
     self.odleglosc_od_gracza=0 #wprowadzić namierzanie pozycji gracza
     self.promien_ataku=50
+    self.x = pozycja_x
+    self.y = pozycja_y
+    self.kierunek = random.randint(1, 2)
+    self.walk_count = 0
+    self.op_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+    self.immune = False
+    self.timer = 0   
     
 class Black_Bow_Guard(Potwory): #łuk
   def __init__(self,pozycja_x: int, pozycja_y: int):
     self.nazwa="Czarny łuk"
     self.pkt_zycia=50
-    self.pkt_ataku_lukiem=25
-    self.szybkosc=2
+    self.atak=15
+    self.szybkosc=1
     self.odleglosc_od_gracza=0 #wprowadzić namierzanie pozycji gracza
     self.promien_ataku=300
     self.liczba_strzal=random.randint(1,3)
+    self.x = pozycja_x
+    self.y = pozycja_y
+    self.kierunek = random.randint(1, 2)
+    self.walk_count = 0
+    self.op_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+    self.immune = False
+    self.timer = 0
+    
+class Projectile: # pocisk szuka drogi do gracza
+    pass
