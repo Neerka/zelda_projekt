@@ -6,27 +6,39 @@ screenHeight = 500
 
 class Player:
     def __init__(self):
-        self.speed = 5
-        self.sword_length = 48
-        self.sword_width = 16
+       self.speed = 3
+        self.sword_length = 0  # 48
+        self.sword_width = 0  # 16
         self.health_points = 100
-        self.attack_points = 100
+        self.attack_points = 25
         self.height = 32
         self.width = 32
         self.x_position = 50
         self.y_position = 50
-        self.x_sword = -500
-        self.y_sword = -500
+        self.x_sword = 0
+        self.y_sword = 0
         self.throwCount = 8
+        self.x_con = self.width + self.speed
+        self.y_con = self.height + self.speed
+        self.collisional = 1
+        self.sword_exists = 0
+        self.immune = False
+        self.rectangle = pygame.Rect(self.x_position, self.y_position, self.width, self.height)
+        self.sword_rect = pygame.Rect(self.x_sword, self.y_sword, self.sword_length, self.sword_width)
+
     def move(self):
-        if keys[pygame.K_left] and self.x_position > self.speed:
+        if keys[pygame.K_LEFT] and self.x_position > self.speed:
             self.x_position -= self.speed
-        if keys[pygame.K_right] and self.x_position < screenWidth-self.width-self.speed:
+            self.rectangle.x -= self.speed
+        if keys[pygame.K_RIGHT] and self.x_position < map_width-self.x_con:
             self.x_position += self.speed
-        if keys[pygame.K_up] and self.y_position > self.speed:
+            self.rectangle.x += self.speed
+        if keys[pygame.K_UP] and self.y_position > self.speed:
             self.y_position -= self.speed
-        if keys[pygame.K_down] and self.y_position < screenHeight-self.height-self.speed:
+            self.rectangle.y -= self.speed
+        if keys[pygame.K_DOWN] and self.y_position < win_height-self.y_con:
             self.y_position += self.speed
+            self.rectangle.y += self.speed
             
     def attack(self):
        if keys[pygame.K_a]:
