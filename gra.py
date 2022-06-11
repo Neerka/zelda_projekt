@@ -1,12 +1,11 @@
-print('Tutaj będą przeciwnicy.')
-import pygame #scalić
-import random #scalić
-FPS=60        #scalić
+class Boss():
+  def __init_(self):
+    self.nazwa="Donogo"
+        self.pkt_zycia=200
+        self.pkt_ataku_ogniem=40
+   def atak_bossa(self,Gracz):
+        self.pkt_zycia_gracza-=Gracz
   
-class Gracz():
-  def __init__(self):
-    self.lista_potworow=[] #potwory będą się spawnić tylko raz na daną mapę
-    
 class Potwory():
   def __init__(self):
     self.promien_zauwazenia_gracza=120
@@ -14,10 +13,11 @@ class Potwory():
     self.spawnowane_potwory=0
     
   def miejsce_sprawnu_potwora(self):
+    self.lista_potworow=[] #potwory będą się spawnić tylko raz na daną mapę
     self.pozycja_x=random.randint(0,40)
     self.pozycja_y=random.randint(0,50)
     
-  def liczba_potworów(self):  #ewidentnie coś tu jest nie tak
+  def liczba_potworow(self): 
     while self.spawnowane_potwory<=wylosowana_liczba_potworow:
       self.rodzaj=random.randint(1,2)
       if self.rodzaj==1:
