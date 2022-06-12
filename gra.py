@@ -1,4 +1,5 @@
 import pygame
+import random
 pygame.init()
 
 win_width = 1280
@@ -34,6 +35,13 @@ class Player:
         self.immune = False
         self.rectangle = pygame.Rect(self.x_position, self.y_position, self.width, self.height)
         self.sword_rect = pygame.Rect(self.x_sword, self.y_sword, self.sword_length, self.sword_width)
+        self.texture = pygame.image.load('chara.png')
+        self.texture = pygame.transform.scale(self.texture, (48, 48))
+        self.sword_text = pygame.image.load('swordcharacter.png')
+        self.sword_text = pygame.transform.scale(self.sword_text, (24, 72))
+        self.sword_90 = pygame.transform.rotate(self.sword_text, 90)
+        self.sword_180 = pygame.transform.rotate(self.sword_text, 180)
+        self.sword_270 = pygame.transform.rotate(self.sword_text, 270)
 
     def move(self):
         if keys[pygame.K_LEFT] and self.x_position > self.speed:
@@ -59,8 +67,7 @@ class Player:
                                          self.y_sword,
                                          self.sword_length, self.sword_width)
            self.sword_exists = 1
-           return True
-           
+           return True           
        elif keys[pygame.K_d]:
            self.sword_width = 24
            self.sword_length = 72
@@ -70,8 +77,7 @@ class Player:
                                          self.y_sword,
                                          self.sword_length, self.sword_width)
            self.sword_exists = 1
-           return True
-           
+           return True           
        elif keys[pygame.K_w]:
            self.sword_width = 72
            self.sword_length = 24
@@ -81,8 +87,7 @@ class Player:
                                          self.y_sword,
                                          self.sword_length, self.sword_width)
            self.sword_exists = 1
-           return True
-           
+           return True          
        elif keys[pygame.K_s]:
            self.sword_width = 72
            self.sword_length = 24
@@ -92,8 +97,7 @@ class Player:
                                          self.y_sword,
                                          self.sword_length, self.sword_width)
            self.sword_exists = 1
-           return True
-           
+           return True     
        else:
            self.sword_exists = 0
         
@@ -121,12 +125,30 @@ class Player:
             self.speed = 0
             print('GAME OVER')
             run_game = False
+   
+    def draw_player(self):
+        if self.health_points > 0:
+            win.blit(self.texture, (self.rectangle.x, self.rectangle.y))
+
+    def draw_sword(self):
+        if self.sword_exists:
+            if keys[pygame.K_w]:
+                win.blit(self.sword_text,
+                         (self.sword_rect.x, self.sword_rect.y))
+            if keys[pygame.K_a]:
+                win.blit(self.sword_90,
+                         (self.sword_rect.x, self.sword_rect.y))
+            if keys[pygame.K_s]:
+                win.blit(self.sword_180,
+                         (self.sword_rect.x, self.sword_rect.y))
+            if keys[pygame.K_d]:
+                win.blit(self.sword_270,
+                         (self.sword_rect.x, self.sword_rect.y))
     
     
 class Bomb:
     def __init__(self, x_bomb: int, y_bomb: int, boolv=False):
         self.timer = 3
-        # self.explosion_range = 64
         self.x_bomb = x_bomb
         self.y_bomb = y_bomb
         self.bomb_height = 16
@@ -135,6 +157,8 @@ class Bomb:
         self.collisional = 0
         self.bomb_rect = pygame.Rect(
             self.x_bomb, self.y_bomb, self.bomb_height, self.bomb_width)
+        self.texture = pygame.image.load('bomb_no.png')
+        self.texture.set_colorkey((255, 255, 255))
 
     def explode(self):
         global bomb_count, wybuch
@@ -145,6 +169,10 @@ class Bomb:
             self.timer = 3
             self.isSet = False
             wybuch = Explosion(self.x_bomb-56, self.y_bomb-56, True)
+    
+    def draw_bomb(self):
+        if self.isSet:
+            win.blit(self.texture, (self.x_bomb, self.y_bomb))
 
             
 class Explosion:
@@ -155,12 +183,18 @@ class Explosion:
         self.exists = boolv
         self.collisional = 1
         self.expl_rect = pygame.Rect(self.x, self.y, 128, 128)
+        self.texture = pygame.image.load('explosionn.png')
+        self.texture = pygame.transform.scale(self.texture, (128, 128))
 
     def vaporize(self):
         global expl_count
         if expl_count == 31:
             self.exists = False
             expl_count = 0
+    
+    def draw_expl(self):
+        if self.exists:
+            win.blit(self.texture, (self.x, self.y))
             
             
 class Potwory():
@@ -186,6 +220,7 @@ class Potwory():
             if self.walk_count == 31:
                 self.szybkosc = self.szybkosc*(-1)
                 self.walk_count = 0
+        self.op_rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         
 class Boss(Potwory):
@@ -203,6 +238,8 @@ class Boss(Potwory):
         self.immune = False
         self.timer = 0
         self.odbicia = 0
+        self.texture = pygame.image.load('bossvers2.png')
+        self.texture = pygame.transform.scale(self.texture, (96, 96))
 
     def attack_movement(self):
         odleglosc_x = (self.x - gracz.x_position)
@@ -233,6 +270,9 @@ class Boss(Potwory):
     def shoot(self):
       global lista_pociskow
       lista_pociskow.append(Projectile(self.x+32, self.y+32, 25, 32, 32))
+    
+    def draw(self):
+        win.blit(self.texture, (self.x, self.y))
    
   
 class Odolda(Potwory):
@@ -254,6 +294,8 @@ class Odolda(Potwory):
         self.timer = 0
         self.odbicia = 0
         self.odleglosc = 10000000
+        self.texture = pygame.image.load('meleeenemy2.png')
+        self.texture = pygame.transform.scale(self.texture, (48, 48))
 
     def attack_movement(self):
         odleglosc_x = (self.x - gracz.x_position)
@@ -295,6 +337,8 @@ class Black_Bow_Guard(Potwory):
         self.odbicia = 0
         self.odleglosc = 10000000
         self.shot_count = 1
+        self.texture = pygame.image.load('arrowenemy.png')
+        self.texture = pygame.transform.scale(self.texture, (48, 48))
 
     def attack_movement(self):
         odleglosc_x = (self.x - gracz.x_position)
@@ -336,7 +380,14 @@ class Projectile:
         self.height = height
         self.x_speed = 5
         self.y_speed = 4
+        self.rect = pygame.Rect(self.x, self.y, self.length, self.height)
         self.los = random.choice([1, 2, 3, 4])
+        if self.length == 16:
+            self.texture = pygame.image.load('projectil.png')
+            self.texture = pygame.transform.scale(self.texture, (24, 24))
+        if self.length == 32:
+            self.texture = pygame.image.load('fireball.png')
+            self.texture = pygame.transform.scale(self.texture, (48, 48))
 
     def projectile_movement(self):
         if self.los == 1:
@@ -350,7 +401,10 @@ class Projectile:
             self.rect.y += self.y_speed
         if self.los == 4:
             self.y -= self.y_speed
-            self.rect.y -= self.y_speed            
+            self.rect.y -= self.y_speed
+    
+    def draw_projectile(self):
+        win.blit(self.texture, (self.rect.x, self.rect.y))
 
       
 def ruchy_gracz():
@@ -403,6 +457,7 @@ def oponent_spawn():
             while check_rect.colliderect(walls[m]):
                 pozycja_x = random.randint(i*320, i*640-96)
                 pozycja_y = random.randint(i*180, i*360-96)
+                check_rect = pygame.Rect(pozycja_x, pozycja_y, 32, 32)
         typ = random.choice([1, 2])
         if typ == 1:
             lista_potworow.append(Odolda(pozycja_x, pozycja_y))
@@ -508,11 +563,11 @@ def oponent_wall_collision(oponent: Potwory):
                     oponent.op_rect.x -= oponent.szybkosc
                     oponent.x -= oponent.szybkosc
                 if oponent.op_rect.y > wall.y:
-                  oponent.op_rect.y += oponent.szybkosc
-                  oponent.y += oponent.szybkosc
+                    oponent.op_rect.y += oponent.szybkosc
+                    oponent.y += oponent.szybkosc
                 if oponent.op_rect.y < wall.y:
-                  oponent.op_rect.y -= oponent.szybkosc
-                  oponent.y -= oponent.szybkosc   
+                    oponent.op_rect.y -= oponent.szybkosc
+                    oponent.y -= oponent.szybkosc   
 
           
 def build_walls(map):
@@ -626,6 +681,19 @@ def settings():
             run_game = False
     keys = pygame.key.get_pressed()
 
+
+def refresh_display():
+    draw_map(maps[currentLevel])
+    gracz.draw_player()
+    gracz.draw_sword()
+    bomba.draw_bomb()
+    wybuch.draw_expl()
+    for oponent in lista_potworow:
+        win.blit(oponent.texture, (oponent.op_rect.x, oponent.op_rect.y))
+    for projectile in lista_pociskow:
+        projectile.draw_projectile()
+    pygame.display.update()
+    
     
 lista_potworow = []
 oponent_spawn()
@@ -644,5 +712,15 @@ run_game = True
 load_level(currentLevel)
 while run_game:
     settings()
+    
+    ruchy_gracz()
+    player_wall_collision()
 
+    ruchy_niezalezne()
+    for oponent in lista_potworow:
+        oponent_wall_collision(oponent)
+
+    walka()
+
+    refresh_display()
     exit()
