@@ -101,19 +101,49 @@ class Player:
         else:
             self.throwCount = 8
 
-    def set_bomb(self):
+    def place_bomb(self):
+        global bomba
+        if keys[pygame.K_q] and not bomba.isSet:
+            bomba = Bomb(self.x_position+8, self.y_position+8, True)
+
+    def death(self):
+        if self.health_points <= 0:
+            print('GAME OVER')
        
 class Bomb:
-    def __init__(self):
+    def __init__(self, x_bomb: int, y_bomb: int, boolv=False):
         self.timer = 3
-        self.explosion_range = 30
-        self.x_bomb = -500
-        self.y_bomb = -500
-        self.bomb_height = 10
-        self.bomb_width = 10
-        self.isSet = False
+        # self.explosion_range = 64
+        self.x_bomb = x_bomb
+        self.y_bomb = y_bomb
+        self.bomb_height = 16
+        self.bomb_width = 16
+        self.isSet = boolv
+        self.collisional = 0
+        self.bomb_rect = pygame.Rect(
+            self.x_bomb, self.y_bomb, self.bomb_height, self.bomb_width)
 
     def explode(self):
-        if self.isSet = True:
-            for i in range (self.timer):
-                time.sleep(3)
+        global bomb_count, wybuch
+        if bomb_count == 62:  # to wychodzi 992 ms, więc prawie jak sekunda
+            self.timer -= 1
+            bomb_count = 0
+        if not self.timer:
+            self.timer = 3
+            self.isSet = False
+            wybuch = Explosion(self.x_bomb-56, self.y_bomb-56, True)
+
+class Explosion:
+    def __init__(self, x: int, y: int, boolv=False):
+        self.range = 64
+        self.x = x  # tutaj trzeba policzyć tak żeby to jakoś miało sens
+        self.y = y  # tutaj też
+        self.exists = boolv
+        self.collisional = 1
+        self.expl_rect = pygame.Rect(self.x, self.y, 128, 128)
+
+    def vaporize(self):
+        global expl_count
+        if expl_count == 31:
+            self.exists = False
+            expl_count = 0
