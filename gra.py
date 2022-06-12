@@ -48,8 +48,8 @@ def load_level(level):
 
 currentLevel = 0
 
-E = Map_Tile('grasstile.png')  # podłoga, po której można chodzić
-F = Map_Tile('grasstile.png')  # przejście do następnego poziomu
+E = Map_Tile('grasstile.png')  # przejście do następnego poziomu
+F = Map_Tile('grasstile.png')  # podłoga, po której można chodzić 
 W = Map_Tile('rock.png')  # stałe ściany
 D = Map_Tile('rockdestroyed.png')  # zniszczalne bombą
 
