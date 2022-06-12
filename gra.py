@@ -27,7 +27,6 @@ run_game = True
 while run_game:
     settings()
 
-    keys = pygame.key.get_pressed()
     exit()
 
     win.fill((40, 40, 65)) # to tylko kolorek tła
