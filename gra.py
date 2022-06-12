@@ -1,6 +1,6 @@
 import pygame
 import random
-
+# Jest kilka bugów, które psują grę, ale tak poza tym to jest git chyba
 pygame.init()
 win_width = 1280
 win_height = 768
