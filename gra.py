@@ -1,14 +1,15 @@
+import pygame
+pygame.init()
+
+win_width = 1280
+win_height = 768
+
+win = pygame.display.set_mode((win_width, win_height))
+pygame.display.set_caption('Zelda - projekt')
+
 class Map_Tile:
-
-
     def __init__(self, texture: str):
         self.texture = pygame.image.load(texture).convert_alpha()
-
-
-def draw_map(map):
-    for i in range(len(map)):
-        for j in range(len(map[i])):
-            win.blit(map[i][j].texture, (j*64, i*64))
 
 
 def build_walls(map):
@@ -44,6 +45,12 @@ def load_level(level):
     gracz = Player()
     finishes = build_finish(maps[level])
     destructible = find_Destructible(maps[level])
+   
+  
+def draw_map(map):
+    for i in range(len(map)):
+        for j in range(len(map[i])):
+            win.blit(map[i][j].texture, (j*64, i*64))
 
 
 currentLevel = 0
@@ -100,4 +107,26 @@ map3 = [
 
 maps = [map1, map2, map3]
 walls = build_walls(maps[currentLevel])
+
+        
+def exit():
+    global run_game
+    if keys[pygame.K_ESCAPE]:
+        run_game = False
+ 
+
+def settings():
+    global run_game, keys
+    pygame.time.delay(16)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run_game = False
+    keys = pygame.key.get_pressed()
+
+
+run_game = True
 load_level(currentLevel)
+while run_game:
+    settings()
+
+    exit()
