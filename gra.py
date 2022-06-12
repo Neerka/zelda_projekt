@@ -1,8 +1,5 @@
 import pygame
 
-pygame.init()
-screenWidth = 500
-screenHeight = 500
 
 class Player:
     def __init__(self):
@@ -13,8 +10,8 @@ class Player:
         self.attack_points = 25
         self.height = 32
         self.width = 32
-        self.x_position = 50
-        self.y_position = 50
+        self.x_position = 100
+        self.y_position = 100
         self.x_sword = 0
         self.y_sword = 0
         self.throwCount = 8
@@ -42,8 +39,8 @@ class Player:
             
     def attack(self):
        if keys[pygame.K_a]:
-           self.sword_width = 16
-           self.sword_length = 48
+           self.sword_width = 24
+           self.sword_length = 72
            self.x_sword = self.x_position - self.sword_length
            self.y_sword = self.y_position + 0.25*self.height
            self.sword_rect = pygame.Rect(self.x_sword,
@@ -53,8 +50,8 @@ class Player:
            return True
            
        elif keys[pygame.K_d]:
-           self.sword_width = 16
-           self.sword_length = 48
+           self.sword_width = 24
+           self.sword_length = 72
            self.x_sword = self.x_position + self.width
            self.y_sword = self.y_position + 0.25*self.width
            self.sword_rect = pygame.Rect(self.x_sword,
@@ -64,8 +61,8 @@ class Player:
            return True
            
        elif keys[pygame.K_w]:
-           self.sword_width = 48
-           self.sword_length = 16
+           self.sword_width = 72
+           self.sword_length = 24
            self.x_sword = self.x_position + 0.25*self.height
            self.y_sword = self.y_position - self.sword_width
            self.sword_rect = pygame.Rect(self.x_sword,
@@ -75,8 +72,8 @@ class Player:
            return True
            
        elif keys[pygame.K_s]:
-           self.sword_width = 48
-           self.sword_length = 16
+           self.sword_width = 72
+           self.sword_length = 24
            self.x_sword = self.x_position + 0.25*self.height
            self.y_sword = self.y_position + self.width
            self.sword_rect = pygame.Rect(self.x_sword,
@@ -106,9 +103,12 @@ class Player:
         if keys[pygame.K_q] and not bomba.isSet:
             bomba = Bomb(self.x_position+8, self.y_position+8, True)
 
-    def death(self):
+   def death(self):
+        global run_game
         if self.health_points <= 0:
+            self.speed = 0
             print('GAME OVER')
+            run_game = False
        
 class Bomb:
     def __init__(self, x_bomb: int, y_bomb: int, boolv=False):
@@ -125,7 +125,7 @@ class Bomb:
 
     def explode(self):
         global bomb_count, wybuch
-        if bomb_count == 62:  # to wychodzi 992 ms, więc prawie jak sekunda
+        if bomb_count == 62: 
             self.timer -= 1
             bomb_count = 0
         if not self.timer:
@@ -136,8 +136,8 @@ class Bomb:
 class Explosion:
     def __init__(self, x: int, y: int, boolv=False):
         self.range = 64
-        self.x = x  # tutaj trzeba policzyć tak żeby to jakoś miało sens
-        self.y = y  # tutaj też
+        self.x = x  
+        self.y = y 
         self.exists = boolv
         self.collisional = 1
         self.expl_rect = pygame.Rect(self.x, self.y, 128, 128)
@@ -147,3 +147,51 @@ class Explosion:
         if expl_count == 31:
             self.exists = False
             expl_count = 0
+
+
+def ruchy_gracz():
+    gracz.move()
+    gracz.attack()
+    if gracz.attack() and keys[pygame.K_LSHIFT]:
+        gracz.throw_sword()
+    gracz.place_bomb()
+    
+def player_wall_collision():
+    global currentLevel
+    for wall in walls:
+        if gracz.rectangle.colliderect(wall):
+            if keys[pygame.K_UP]:
+                gracz.y_position += gracz.speed
+                gracz.rectangle.y += gracz.speed
+            if keys[pygame.K_LEFT]:
+                gracz.x_position += gracz.speed
+                gracz.rectangle.x += gracz.speed
+            if keys[pygame.K_DOWN]:
+                gracz.rectangle.y -= gracz.speed
+                gracz.y_position -= gracz.speed
+            if keys[pygame.K_RIGHT]:
+                gracz.rectangle.x -= gracz.speed
+                gracz.x_position -= gracz.speed
+    if currentLevel < 2:
+        if gracz.rectangle.colliderect(finishes[0]):
+            currentLevel += 1
+            for wall in walls:
+                walls.remove(wall)
+            for oponent in lista_potworow:
+                lista_potworow.remove(oponent)
+            for pocisk in lista_pociskow:
+                lista_pociskow.remove(pocisk)
+            load_level(currentLevel)
+            if currentLevel < 2:
+                oponent_spawn()
+            else:
+                spawn_boss()
+
+
+bomba = Bomb(-100, -100)
+wybuch = Explosion(-100, -100)
+
+gracz_im_timer = 0
+licznik = 0
+bomb_count = 0
+expl_count = 0
