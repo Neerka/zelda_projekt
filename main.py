@@ -27,7 +27,7 @@ class Potwory():
     self.walk_count = 0
     
   def miejsce_sprawnu_potwora(self):
-    self.lista_potworow=[] #potwory będą się spawnić tylko raz na daną mapę
+    self.lista_potworow=[] 
     self.pozycja_x=random.randint(0,40)
     self.pozycja_y=random.randint(0,50)
     
@@ -48,7 +48,7 @@ class Potwory():
         
   def atak_potworow(self):
     for potwor in self.lista_potworow:
-      self.pkt_zycia_gracza-=self.pkt_ataku_mieczem  #wprowadzić namierzanie pozycji gracza
+      self.pkt_zycia_gracza-=self.pkt_ataku_mieczem  
       print("Gracz otrzymał obrażenia.")
     while self.liczba_strzal>0:
       if status_pocisku==True:
@@ -82,7 +82,7 @@ class Odolda(Potwory): #miecz
     self.atak=20
     self.szybkosc=2
     self.height, self.width = 32, 32
-    self.odleglosc_od_gracza=0 #wprowadzić namierzanie pozycji gracza
+    self.odleglosc_od_gracza=0 
     self.promien_ataku=50
     self.x = pozycja_x
     self.y = pozycja_y
@@ -98,7 +98,7 @@ class Black_Bow_Guard(Potwory): #łuk
     self.pkt_zycia=50
     self.atak=15
     self.szybkosc=1
-    self.odleglosc_od_gracza=0 #wprowadzić namierzanie pozycji gracza
+    self.odleglosc_od_gracza=0 
     self.promien_ataku=300
     self.liczba_strzal=random.randint(1,3)
     self.x = pozycja_x
@@ -111,3 +111,27 @@ class Black_Bow_Guard(Potwory): #łuk
     
 class Projectile: # pocisk szuka drogi do gracza
     pass
+
+def oponent_spawn():
+  global lista_potworow 
+  for i in range(1, 3):
+    pozycja_x = random.randint(i*320, i*640-(32))
+    pozycja_y = random.randint(i*180, i*360-(32))
+    typ = random.choice([1, 2])
+    if typ == 1:
+      lista_potworow.append(Odolda(pozycja_x, pozycja_y))
+    else:
+      lista_potworow.append(Black_Bow_Guard(pozycja_x, pozycja_y))
+  for j in range(1, 3):
+    if j == 1:
+      pozycja_x = random.randint(0, 640)
+      pozycja_y = random.randint(360, 720-32)
+    else:
+      pozycja_x = random.randint(640, 1280-32)
+      pozycja_y = random.randint(0, 360)
+      typ = random.choice([1, 2])
+      if typ == 1:
+        lista_potworow.append(Odolda(pozycja_x, pozycja_y))
+      else:
+        lista_potworow.append(Black_Bow_Guard(pozycja_x, pozycja_y))
+  return True
