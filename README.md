@@ -8,9 +8,9 @@ Zrobiliśmy zeldę i działa (mimo jednego poważnego błędu i kilku małych):
  -- Zrobił implementację grafiki i skleił grę w całość. Pomagał pozostałym członkom zespołu rozwiązać problemy w kodzie.
  - Julia:  
  -- Zrobiła postać i wszelkie mechaniki związane z postacią, tzn. bomby, ekspolozje, miecz.
- - Gosia:
+ - Gosia:  
  -- Zrobiła przeciwników, zaprojektowała walki i wszelkie rzeczy związane z przeciwnikami.
- - Marcin:
+ - Marcin:  
  -- Zrobił poszczególne mapki i ogarnął kolizyjność z mapą oraz przejście między poziomami. Wszelkie elementy mapowe to jego sprawka. Dodatkowo, z rzeczy nieprogramistycznych, zrobił wszystkie grafiki, które są użyte w grze.
  
  
