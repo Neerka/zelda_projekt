@@ -39,11 +39,15 @@ class Player:
             self.x_sword, self.y_sword, self.sword_length, self.sword_width)
         self.texture = pygame.image.load('chara.png')
         self.texture = pygame.transform.scale(self.texture, (48, 48))
+        self.hit = pygame.image.load('chara_hit.png')
+        self.hit = pygame.transform.scale(self.hit, (48, 48))
+        self.hit.set_colorkey((0, 0, 0))
         self.sword_text = pygame.image.load('swordcharacter.png')
         self.sword_text = pygame.transform.scale(self.sword_text, (24, 72))
         self.sword_90 = pygame.transform.rotate(self.sword_text, 90)
         self.sword_180 = pygame.transform.rotate(self.sword_text, 180)
         self.sword_270 = pygame.transform.rotate(self.sword_text, 270)
+        self.immune_timer = 0
 
     def move(self):
         if keys[pygame.K_LEFT] and self.x_position > self.speed:
@@ -131,6 +135,12 @@ class Player:
     def draw_player(self):
         if self.health_points > 0:
             win.blit(self.texture, (self.rectangle.x, self.rectangle.y))
+            if self.immune:
+                self.immune_timer += 1
+                if self.immune_timer%31 != 0:
+                    win.blit(self.hit, (self.rectangle.x, self.rectangle.y))
+                else:
+                    self.immune_timer = 0
 
     def draw_sword(self):
         if self.sword_exists:
@@ -237,11 +247,14 @@ class Boss(Potwory):  # Boss jaki jest - każdy widzi
         self.op_rect = pygame.Rect(self.x, self.y, self.width, self.height)
         self.texture = pygame.image.load('bossvers2.png')
         self.texture = pygame.transform.scale(self.texture, (96, 96))
+        self.hit = pygame.image.load('bossvers3.png')
+        self.hit = pygame.transform.scale(self.hit, (96, 96))
         self.wykrycie = 100000000
         self.shot_count = 1
         self.immune = False
         self.timer = 0
         self.odbicia = 0
+        self.immune_timer = 0
 
     def attack_movement(self):
         odleglosc_x = (self.x - gracz.x_position)
@@ -297,6 +310,10 @@ class Odolda(Potwory):  # miecz
         self.odleglosc = 10000000
         self.texture = pygame.image.load('meleeenemy2.png')
         self.texture = pygame.transform.scale(self.texture, (48, 48))
+        self.hit = pygame.image.load('meleeenemy2_hit.png')
+        self.hit = pygame.transform.scale(self.hit, (48, 48))
+        self.hit.set_colorkey((0, 0, 0))
+        self.immune_timer = 0
 
     def attack_movement(self):
         odleglosc_x = (self.x - gracz.x_position)
@@ -341,6 +358,10 @@ class Black_Bow_Guard(Potwory):  # łuk
         self.shot_count = 1
         self.texture = pygame.image.load('arrowenemy.png')
         self.texture = pygame.transform.scale(self.texture, (48, 48))
+        self.hit = pygame.image.load('arrowenemy_hit.png')
+        self.hit = pygame.transform.scale(self.hit, (48, 48))
+        self.hit.set_colorkey((0, 0, 0))
+        self.immune_timer = 0
 
     def attack_movement(self):
         odleglosc_x = (self.x - gracz.x_position)
@@ -556,6 +577,10 @@ def refresh_display():
     wybuch.draw_expl()
     for oponent in lista_potworow:
         win.blit(oponent.texture, (oponent.op_rect.x, oponent.op_rect.y))
+        if oponent.immune:
+            oponent.immune_timer += 1
+            if oponent.immune_timer%10 != 0:
+                win.blit(oponent.hit, (oponent.op_rect.x, oponent.op_rect.y))
     for projectile in lista_pociskow:
         projectile.draw_projectile()
     pygame.display.update()
