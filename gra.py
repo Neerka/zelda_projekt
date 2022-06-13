@@ -49,7 +49,7 @@ class Player:
         if keys[pygame.K_LEFT] and self.x_position > self.speed:
             self.x_position -= self.speed
             self.rectangle.x -= self.speed
-        if keys[pygame.K_RIGHT] and self.x_position < map_width-self.x_con:
+        if keys[pygame.K_RIGHT] and self.x_position < win_width-self.x_con:
             self.x_position += self.speed
             self.rectangle.x += self.speed
         if keys[pygame.K_UP] and self.y_position > self.speed:
